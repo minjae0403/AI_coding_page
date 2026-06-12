@@ -1,0 +1,218 @@
+[2m오전 1:56:04[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\user\Downloads\리뷰 데이터 수집 앱\src\app\components\StorePage.tsx: 'import' and 'export' may only appear at the top level. (199:0)
+
+[0m [90m 197 |[31m [36mexport[31m [36mfunction[31m [33mStorePage[31m({ store[33m,[31m onBack[33m,[31m onStoreUpdate[33m,[31m onSelectMenu }[33m:[31m [33mProps[31m) {
+ [90m 198 |[31m   [36mconst[31m [reviewTarget[33m,[31m setReviewTarget] [33m=[31m useState[33m<[31m[33mMenuItem[31m [33m|[31m [36mnull[31m[33m>[31m([36mnull[31m)[33m;[31m
+[31m[1m>[22m[31m[90m 199 |[31m [36mexport[31m [36mfunction[31m [33mStorePage[31m({ store[33m,[31m onBack[33m,[31m onStoreUpdate }[33m:[31m [33mProps[31m) {
+ [90m     |[31m [31m[1m^[22m[31m
+ [90m 200 |[31m   [36mconst[31m [reviewTarget[33m,[31m setReviewTarget] [33m=[31m useState[33m<[31m[33mMenuItem[31m [33m|[31m [36mnull[31m[33m>[31m([36mnull[31m)[33m;[31m
+ [90m 201 |[31m   [36mconst[31m { label[33m:[31m congestionLabel[33m,[31m color[33m:[31m congestionColor[33m,[31m bg[33m:[31m congestionBg } [33m=[31m getCongestionInfo(store[33m.[31mcongestion)[33m;[31m
+ [90m 202 |[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/user/Downloads/리뷰 데이터 수집 앱/src/app/components/StorePage.tsx[39m:199:0
+[33m  197|  export function StorePage({ store, onBack, onStoreUpdate, onSelectMenu }: Props) {
+  198|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  199|  export function StorePage({ store, onBack, onStoreUpdate }: Props) {
+     |  ^
+  200|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  201|    const { label: congestionLabel, color: congestionColor, bg: congestionBg } = getCongestionInfo(store.congestion);[39m
+      at constructor (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12888:18)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13333:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseBlock (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13314:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12117:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12103:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9189:18)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13462:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12420:14)
+      at TypeScriptParserMixin.parseFunction (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13461:10)
+      at TypeScriptParserMixin.parseFunctionStatement (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13142:17)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12808:21)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13951:17)
+      at TypeScriptParserMixin.parseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9646:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13910:31)
+      at TypeScriptParserMixin.parseExport (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13829:29)
+      at TypeScriptParserMixin.parseExport (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9402:20)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12895:27)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12629:25)
+      at TypeScriptParserMixin.parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:14505:25)
+      at TypeScriptParserMixin.parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:10143:18)
+      at parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:14539:38)
+      at parser (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\parser\index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transformation\normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:261:32)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:223:11)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:189:28
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:113:33
+[2m오전 2:07:53[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m Pre-transform error: C:\Users\user\Downloads\리뷰 데이터 수집 앱\src\app\components\StorePage.tsx: 'import' and 'export' may only appear at the top level. (199:0)
+
+[0m [90m 197 |[39m [36mexport[39m [36mfunction[39m [33mStorePage[39m({ store[33m,[39m onBack[33m,[39m onStoreUpdate[33m,[39m onSelectMenu }[33m:[39m [33mProps[39m) {
+ [90m 198 |[39m   [36mconst[39m [reviewTarget[33m,[39m setReviewTarget] [33m=[39m useState[33m<[39m[33mMenuItem[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 199 |[39m [36mexport[39m [36mfunction[39m [33mStorePage[39m({ store[33m,[39m onBack[33m,[39m onStoreUpdate }[33m:[39m [33mProps[39m) {
+ [90m     |[39m [31m[1m^[22m[39m
+ [90m 200 |[39m   [36mconst[39m [reviewTarget[33m,[39m setReviewTarget] [33m=[39m useState[33m<[39m[33mMenuItem[39m [33m|[39m [36mnull[39m[33m>[39m([36mnull[39m)[33m;[39m
+ [90m 201 |[39m   [36mconst[39m { label[33m:[39m congestionLabel[33m,[39m color[33m:[39m congestionColor[33m,[39m bg[33m:[39m congestionBg } [33m=[39m getCongestionInfo(store[33m.[39mcongestion)[33m;[39m
+ [90m 202 |[39m[0m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/user/Downloads/리뷰 데이터 수집 앱/src/app/components/StorePage.tsx[39m:199:0
+[33m  197|  export function StorePage({ store, onBack, onStoreUpdate, onSelectMenu }: Props) {
+  198|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  199|  export function StorePage({ store, onBack, onStoreUpdate }: Props) {
+     |  ^
+  200|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  201|    const { label: congestionLabel, color: congestionColor, bg: congestionBg } = getCongestionInfo(store.congestion);[39m
+[2m오전 2:07:53[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\user\Downloads\리뷰 데이터 수집 앱\src\app\components\StorePage.tsx: 'import' and 'export' may only appear at the top level. (199:0)
+
+[0m [90m 197 |[31m [36mexport[31m [36mfunction[31m [33mStorePage[31m({ store[33m,[31m onBack[33m,[31m onStoreUpdate[33m,[31m onSelectMenu }[33m:[31m [33mProps[31m) {
+ [90m 198 |[31m   [36mconst[31m [reviewTarget[33m,[31m setReviewTarget] [33m=[31m useState[33m<[31m[33mMenuItem[31m [33m|[31m [36mnull[31m[33m>[31m([36mnull[31m)[33m;[31m
+[31m[1m>[22m[31m[90m 199 |[31m [36mexport[31m [36mfunction[31m [33mStorePage[31m({ store[33m,[31m onBack[33m,[31m onStoreUpdate }[33m:[31m [33mProps[31m) {
+ [90m     |[31m [31m[1m^[22m[31m
+ [90m 200 |[31m   [36mconst[31m [reviewTarget[33m,[31m setReviewTarget] [33m=[31m useState[33m<[31m[33mMenuItem[31m [33m|[31m [36mnull[31m[33m>[31m([36mnull[31m)[33m;[31m
+ [90m 201 |[31m   [36mconst[31m { label[33m:[31m congestionLabel[33m,[31m color[33m:[31m congestionColor[33m,[31m bg[33m:[31m congestionBg } [33m=[31m getCongestionInfo(store[33m.[31mcongestion)[33m;[31m
+ [90m 202 |[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/user/Downloads/리뷰 데이터 수집 앱/src/app/components/StorePage.tsx[39m:199:0
+[33m  197|  export function StorePage({ store, onBack, onStoreUpdate, onSelectMenu }: Props) {
+  198|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  199|  export function StorePage({ store, onBack, onStoreUpdate }: Props) {
+     |  ^
+  200|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  201|    const { label: congestionLabel, color: congestionColor, bg: congestionBg } = getCongestionInfo(store.congestion);[39m
+      at constructor (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12888:18)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13333:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseBlock (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13314:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12117:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12103:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9189:18)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13462:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12420:14)
+      at TypeScriptParserMixin.parseFunction (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13461:10)
+      at TypeScriptParserMixin.parseFunctionStatement (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13142:17)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12808:21)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13951:17)
+      at TypeScriptParserMixin.parseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9646:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13910:31)
+      at TypeScriptParserMixin.parseExport (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13829:29)
+      at TypeScriptParserMixin.parseExport (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9402:20)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12895:27)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12629:25)
+      at TypeScriptParserMixin.parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:14505:25)
+      at TypeScriptParserMixin.parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:10143:18)
+      at parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:14539:38)
+      at parser (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\parser\index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transformation\normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:261:32)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:223:11)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:189:28
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:113:33
+[2m오전 2:10:16[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\user\Downloads\리뷰 데이터 수집 앱\src\app\components\StorePage.tsx: 'import' and 'export' may only appear at the top level. (199:0)
+
+[0m [90m 197 |[31m [36mexport[31m [36mfunction[31m [33mStorePage[31m({ store[33m,[31m onBack[33m,[31m onStoreUpdate[33m,[31m onSelectMenu }[33m:[31m [33mProps[31m) {
+ [90m 198 |[31m   [36mconst[31m [reviewTarget[33m,[31m setReviewTarget] [33m=[31m useState[33m<[31m[33mMenuItem[31m [33m|[31m [36mnull[31m[33m>[31m([36mnull[31m)[33m;[31m
+[31m[1m>[22m[31m[90m 199 |[31m [36mexport[31m [36mfunction[31m [33mStorePage[31m({ store[33m,[31m onBack[33m,[31m onStoreUpdate }[33m:[31m [33mProps[31m) {
+ [90m     |[31m [31m[1m^[22m[31m
+ [90m 200 |[31m   [36mconst[31m [reviewTarget[33m,[31m setReviewTarget] [33m=[31m useState[33m<[31m[33mMenuItem[31m [33m|[31m [36mnull[31m[33m>[31m([36mnull[31m)[33m;[31m
+ [90m 201 |[31m   [36mconst[31m { label[33m:[31m congestionLabel[33m,[31m color[33m:[31m congestionColor[33m,[31m bg[33m:[31m congestionBg } [33m=[31m getCongestionInfo(store[33m.[31mcongestion)[33m;[31m
+ [90m 202 |[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/user/Downloads/리뷰 데이터 수집 앱/src/app/components/StorePage.tsx[39m:199:0
+[33m  197|  export function StorePage({ store, onBack, onStoreUpdate, onSelectMenu }: Props) {
+  198|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  199|  export function StorePage({ store, onBack, onStoreUpdate }: Props) {
+     |  ^
+  200|    const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
+  201|    const { label: congestionLabel, color: congestionColor, bg: congestionBg } = getCongestionInfo(store.congestion);[39m
+      at constructor (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12888:18)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13333:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseBlock (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13314:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12117:24)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12103:10)
+      at TypeScriptParserMixin.parseFunctionBodyAndFinish (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9189:18)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13462:12
+      at TypeScriptParserMixin.withSmartMixTopicForbiddingContext (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12420:14)
+      at TypeScriptParserMixin.parseFunction (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13461:10)
+      at TypeScriptParserMixin.parseFunctionStatement (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13142:17)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12808:21)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12764:17)
+      at TypeScriptParserMixin.parseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13951:17)
+      at TypeScriptParserMixin.parseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9646:85)
+      at TypeScriptParserMixin.maybeParseExportDeclaration (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13910:31)
+      at TypeScriptParserMixin.parseExport (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13829:29)
+      at TypeScriptParserMixin.parseExport (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9402:20)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12895:27)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:9525:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12784:17)
+      at TypeScriptParserMixin.parseModuleItem (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12761:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13333:36)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:13326:10)
+      at TypeScriptParserMixin.parseProgram (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12639:10)
+      at TypeScriptParserMixin.parseTopLevel (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:12629:25)
+      at TypeScriptParserMixin.parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:14505:25)
+      at TypeScriptParserMixin.parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:10143:18)
+      at parse (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\parser\lib\index.js:14539:38)
+      at parser (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\parser\index.js:41:34)
+      at parser.next (<anonymous>)
+      at normalizeFile (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transformation\normalize-file.js:51:37)
+      at normalizeFile.next (<anonymous>)
+      at run (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transformation\index.js:22:50)
+      at run.next (<anonymous>)
+      at transform (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\transform.js:22:33)
+      at transform.next (<anonymous>)
+      at step (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:261:32)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:273:13
+      at async.call.result.err.err (C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:223:11)
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:189:28
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\@babel\core\lib\gensync-utils\async.js:67:7
+      at C:\Users\user\Downloads\리뷰 데이터 수집 앱\node_modules\gensync\index.js:113:33

@@ -24,11 +24,10 @@ function getCongestionInfo(value: number) {
 
 function StoreCard({ store, onClick }: { store: Store; onClick: () => void }) {
   const reviews = store.menu.flatMap((menu) => menu.reviews);
-  const avgRating =
-    reviews.length > 0
-      ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1)
-      : null;
   const { label: congestionLabel, dot } = getCongestionInfo(store.congestion);
+
+  const goodReviewsCount = reviews.filter(review => review.rating === 3).length;
+  const goodReviewsPercentage = reviews.length > 0 ? (goodReviewsCount / reviews.length) * 100 : 0;
 
   return (
     <button
@@ -40,10 +39,10 @@ function StoreCard({ store, onClick }: { store: Store; onClick: () => void }) {
       <div className="relative h-40 overflow-hidden">
         <img src={store.image} alt={store.name} className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
-        {avgRating && (
+        {reviews.length > 0 && ( // 리뷰가 있을 때만 표시
           <div className="absolute right-2.5 top-2.5 flex items-center gap-1 rounded-full bg-white/95 px-2 py-0.5 text-xs font-medium text-gray-800 shadow-sm backdrop-blur-sm">
-            <span className="text-yellow-400">★</span>
-            {avgRating}
+            <Sparkles className="h-3 w-3 text-[#FF6B35]" /> {/* Sparkles 아이콘 추가 */}
+            <span>{goodReviewsPercentage.toFixed(0)}% 좋음</span>
           </div>
         )}
         <div className="absolute bottom-2.5 left-2.5">

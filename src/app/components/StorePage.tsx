@@ -9,6 +9,7 @@ interface Props {
   store: Store;
   onBack: () => void;
   onStoreUpdate: (store: Store) => void;
+  onSelectMenu: (menu: MenuItem) => void;
 }
 
 function getCongestionInfo(value: number) {
@@ -63,11 +64,13 @@ function ReviewCard({ review }: { review: Review }) {
 function MenuCard({
   item,
   storeType,
-  onReview,
+  store,
+  onSelectMenu,
 }: {
   item: MenuItem;
   storeType: Store["type"];
-  onReview: () => void;
+  store: Store;
+  onSelectMenu: (menu: MenuItem) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
   const labels = storeType === "cafe" ? FLAVOR_LABELS : RESTAURANT_FLAVOR_LABELS;
@@ -114,17 +117,17 @@ function MenuCard({
         <div className="flex gap-2">
           <button
             type="button"
-            onClick={() => setExpanded((current) => !current)}
+            onClick={() => onSelectMenu(item)}
             className="flex-1 rounded-lg bg-gray-100 py-2 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-200"
           >
-            {expanded ? "접기" : `리뷰 ${item.reviews.length}개 보기`}
+            리뷰 {item.reviews.length}개 보기
           </button>
           <button
             type="button"
-            onClick={onReview}
+            onClick={() => setExpanded((current) => !current)}
             className="flex-1 rounded-lg bg-[#3D6BF5] py-2 text-xs font-medium text-white transition-opacity hover:opacity-90"
           >
-            리뷰 쓰기
+            {expanded ? "접기" : "간단 리뷰"}
           </button>
         </div>
 
@@ -172,7 +175,7 @@ function MenuCard({
   );
 }
 
-export function StorePage({ store, onBack, onStoreUpdate }: Props) {
+export function StorePage({ store, onBack, onStoreUpdate, onSelectMenu }: Props) {
   const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
   const { label: congestionLabel, color: congestionColor, bg: congestionBg } = getCongestionInfo(store.congestion);
 
@@ -341,7 +344,13 @@ export function StorePage({ store, onBack, onStoreUpdate }: Props) {
 
         <p className="mt-1 text-sm font-semibold text-gray-900">메뉴별 리뷰</p>
         {store.menu.map((item) => (
-          <MenuCard key={item.id} item={item} storeType={store.type} onReview={() => setReviewTarget(item)} />
+          <MenuCard
+            key={item.id}
+            item={item}
+            storeType={store.type}
+            store={store}
+            onSelectMenu={onSelectMenu}
+          />
         ))}
       </main>
 
