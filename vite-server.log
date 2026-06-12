@@ -1,0 +1,15 @@
+
+> @figma/my-make-file@0.0.1 dev
+> vite --host 127.0.0.1
+
+
+  [32m[1mVITE[22m v6.3.5[39m  [2mready in [0m[1m1072[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m오후 9:55:25[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/@fs/C:\Users\user\Downloads\리뷰 데이터 수집 앱\src\app\components\ReviewForm.tsx, /src/styles/index.css[22m
+[2m오후 10:50:32[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/components/StorePage.tsx, /src/styles/index.css[22m
+[2m오후 10:50:50[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/components/StorePage.tsx, /src/styles/index.css[22m
+[2m오후 10:59:57[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/components/StorePage.tsx, /src/styles/index.css[22m
+[2m오후 11:01:09[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/components/StorePage.tsx, /src/styles/index.css[22m
+[2m오후 11:01:22[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/components/StorePage.tsx, /src/styles/index.css[22m
+[2m오후 11:13:59[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/app/components/StorePage.tsx, /src/styles/index.css[22m
