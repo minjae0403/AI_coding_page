@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { X } from "lucide-react";
-import type { FlavorProfile, MenuItem, Store } from "./mockData";
-import { FLAVOR_LABELS, RESTAURANT_FLAVOR_LABELS } from "./mockData";
+import type { FlavorProfile, MealFlavorProfile, MenuItem, Store } from "./mockData";
+import { FLAVOR_LABELS, RESTAURANT_FLAVOR_LABELS, MEAL_FLAVOR_LABELS } from "./mockData";
 
 interface Props {
   store: Store;
   menu: MenuItem;
   onSubmit: (review: {
     rating: number;
-    flavorProfile: FlavorProfile;
+    flavorProfile: FlavorProfile | MealFlavorProfile;
     comment: string;
     tags: string[];
     userName: string;
@@ -78,19 +78,20 @@ function FlavorSlider({
 }
 
 export function ReviewForm({ store, menu, onSubmit, onClose }: Props) {
+  const isMeal = menu.tags?.includes("#식사") ?? false;
   const [rating, setRating] = useState(2);
-  const [flavor, setFlavor] = useState<FlavorProfile>({
-    acidity: 50,
-    sweetness: 50,
-    bitterness: 50,
-    body: 50,
-    aroma: 50,
-  });
+  
+  const [flavor, setFlavor] = useState<FlavorProfile | MealFlavorProfile>(
+    isMeal
+      ? { priceValue: 50, portion: 50, saltiness: 50 }
+      : { acidity: 50, sweetness: 50, bitterness: 50, body: 50, aroma: 50 }
+  );
+
   const [comment, setComment] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [userName, setUserName] = useState("");
 
-  const labels = store.type === "cafe" ? FLAVOR_LABELS : RESTAURANT_FLAVOR_LABELS;
+  const labels = isMeal ? MEAL_FLAVOR_LABELS : (store.type === "cafe" ? FLAVOR_LABELS : RESTAURANT_FLAVOR_LABELS);
   const tagOptions = store.type === "cafe" ? CAFE_TAG_OPTIONS : RESTAURANT_TAG_OPTIONS;
 
   const toggleTag = (tag: string) => {
@@ -177,15 +178,15 @@ export function ReviewForm({ store, menu, onSubmit, onClose }: Props) {
 
           <div>
             <label className="mb-3 block text-xs font-medium text-gray-500">
-              맛 프로필
+              {isMeal ? "식사 평가" : "맛 프로필"}
               <span className="ml-1 font-normal text-gray-400">(0-100)</span>
             </label>
             <div className="flex flex-col gap-3 rounded-lg bg-gray-50 p-3">
-              {(Object.keys(flavor) as Array<keyof FlavorProfile>).map((key) => (
+              {(Object.keys(flavor) as Array<keyof (FlavorProfile | MealFlavorProfile)>).map((key) => (
                 <FlavorSlider
                   key={key}
                   label={labels[key]}
-                  value={flavor[key]}
+                  value={(flavor as any)[key]}
                   onChange={(value) => setFlavor((current) => ({ ...current, [key]: value }))}
                 />
               ))}

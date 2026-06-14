@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, Sparkles } from "lucide-react";
-import type { FlavorProfile, MenuItem, Review, Store } from "./mockData";
-import { FLAVOR_LABELS, RESTAURANT_FLAVOR_LABELS } from "./mockData";
+import type { FlavorProfile, MealFlavorProfile, MenuItem, Review, Store } from "./mockData";
+import { FLAVOR_LABELS, RESTAURANT_FLAVOR_LABELS, MEAL_FLAVOR_LABELS } from "./mockData";
 import { FlavorRadar } from "./FlavorRadar";
 import { ReviewForm } from "./ReviewForm"; // ReviewForm import 추가
 
@@ -25,7 +25,7 @@ function StarDisplay({ rating }: { rating: number }) {
   );
 }
 
-function ReviewCard({ review }: { review: Review }) {
+function ReviewCard({ review, isMeal }: { review: Review, isMeal: boolean }) {
   return (
     <article className="border-b border-gray-100 py-3.5 last:border-0">
       <div className="mb-2 flex items-center justify-between gap-2">
@@ -58,7 +58,8 @@ function ReviewCard({ review }: { review: Review }) {
 export function MenuDetailPage({ store, menu, onBack, onGoHome, onStoreUpdate }: Props) {
   const [reviewFormOpen, setReviewFormOpen] = useState(false); // 리뷰 폼 상태 관리
 
-  const labels = store.type === "cafe" ? FLAVOR_LABELS : RESTAURANT_FLAVOR_LABELS;
+  const isMeal = menu.tags?.includes("#식사") ?? false;
+  const labels = isMeal ? MEAL_FLAVOR_LABELS : (store.type === "cafe" ? FLAVOR_LABELS : RESTAURANT_FLAVOR_LABELS);
 
   // 메뉴별 리뷰 데이터
   const itemTotalReviews = menu.reviews.length;
@@ -73,11 +74,8 @@ export function MenuDetailPage({ store, menu, onBack, onGoHome, onStoreUpdate }:
     3: itemTotalReviews > 0 ? ((itemReviewCounts[3] || 0) / itemTotalReviews) * 100 : 0,
   };
 
-  const goodReviewsCount = menu.reviews.filter(review => review.rating === 3).length;
-  const goodReviewsPercentage = menu.reviews.length > 0 ? (goodReviewsCount / menu.reviews.length) * 100 : 0;
-
   const handleReviewSubmit = (
-    data: { rating: number; flavorProfile: FlavorProfile; comment: string; tags: string[]; userName: string }
+    data: { rating: number; flavorProfile: FlavorProfile | MealFlavorProfile; comment: string; tags: string[]; userName: string }
   ) => {
     const newReview: Review = {
       id: `r-${Date.now()}`,
@@ -95,11 +93,21 @@ export function MenuDetailPage({ store, menu, onBack, onGoHome, onStoreUpdate }:
     const updatedMenu = store.menu.map((item) => {
       if (item.id !== menu.id) return item;
       const allReviews = [...item.reviews, newReview];
-      const keys = Object.keys(data.flavorProfile) as Array<keyof FlavorProfile>;
-      const avgFlavor = keys.reduce((result, key) => {
-        result[key] = Math.round(allReviews.reduce((sum, review) => sum + review.flavorProfile[key], 0) / allReviews.length);
-        return result;
-      }, {} as FlavorProfile);
+      
+      let avgFlavor;
+      if (isMeal) {
+        const keys = Object.keys(data.flavorProfile) as Array<keyof MealFlavorProfile>;
+        avgFlavor = keys.reduce((result, key) => {
+          result[key] = Math.round(allReviews.reduce((sum, review) => sum + (review.flavorProfile as MealFlavorProfile)[key], 0) / allReviews.length);
+          return result;
+        }, {} as MealFlavorProfile);
+      } else {
+        const keys = Object.keys(data.flavorProfile) as Array<keyof FlavorProfile>;
+        avgFlavor = keys.reduce((result, key) => {
+          result[key] = Math.round(allReviews.reduce((sum, review) => sum + (review.flavorProfile as FlavorProfile)[key], 0) / allReviews.length);
+          return result;
+        }, {} as FlavorProfile);
+      }
 
       return { ...item, reviews: allReviews, avgFlavor };
     });

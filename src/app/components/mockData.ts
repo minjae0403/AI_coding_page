@@ -8,13 +8,19 @@ export interface FlavorProfile {
   aroma: number;
 }
 
+export interface MealFlavorProfile {
+  priceValue: number;
+  portion: number;
+  saltiness: number;
+}
+
 export interface Review {
   id: string;
   userId: string;
   userName: string;
   menuId: string;
   rating: number;
-  flavorProfile: FlavorProfile;
+  flavorProfile: FlavorProfile | MealFlavorProfile;
   comment: string;
   tags: string[];
   createdAt: string;
@@ -29,7 +35,7 @@ export interface MenuItem {
   description: string;
   image?: string;
   reviews: Review[];
-  avgFlavor: FlavorProfile;
+  avgFlavor: FlavorProfile | MealFlavorProfile;
   tags?: string[];
 }
 
@@ -66,6 +72,12 @@ export const RESTAURANT_FLAVOR_LABELS: Record<keyof FlavorProfile, string> = {
   bitterness: "쌉쌀함",
   body: "진한맛",
   aroma: "향",
+};
+
+export const MEAL_FLAVOR_LABELS: Record<keyof MealFlavorProfile, string> = {
+  priceValue: "가성비",
+  portion: "양",
+  saltiness: "짠맛",
 };
 
 export const stores: Store[] = [
@@ -183,7 +195,8 @@ export const stores: Store[] = [
         price: 12000,
         description: "국산 콩 된장으로 끓인 구수한 찌개와 제철 반찬 5가지",
         image: "https://images.unsplash.com/photo-1583908701673-8b4b89f3b8b4?w=600&h=400&fit=crop&auto=format",
-        avgFlavor: { acidity: 20, sweetness: 30, bitterness: 25, body: 85, aroma: 80 },
+        avgFlavor: { priceValue: 85, portion: 80, saltiness: 70 },
+        tags: ["#식사"],
         reviews: [
           {
             id: "r4",
@@ -191,7 +204,7 @@ export const stores: Store[] = [
             userName: "밥심으로살아",
             menuId: "m4",
             rating: 5,
-            flavorProfile: { acidity: 18, sweetness: 28, bitterness: 22, body: 88, aroma: 82 },
+            flavorProfile: { priceValue: 90, portion: 85, saltiness: 65 },
             comment: "집에서 먹는 된장찌개 맛 그대로입니다. 반찬 하나하나 정성이 느껴지고 밥과 잘 어울려요.",
             tags: ["구수함", "정성", "가정식맛"],
             createdAt: "2026-06-09",
@@ -203,7 +216,7 @@ export const stores: Store[] = [
             userName: "미식가김씨",
             menuId: "m4",
             rating: 4,
-            flavorProfile: { acidity: 22, sweetness: 32, bitterness: 28, body: 82, aroma: 78 },
+            flavorProfile: { priceValue: 80, portion: 75, saltiness: 75 },
             comment: "깊은 된장 풍미가 좋습니다. 약간 짜게 느껴질 수 있어요.",
             tags: ["구수함", "진한맛"],
             createdAt: "2026-06-06",
@@ -218,7 +231,8 @@ export const stores: Store[] = [
         price: 15000,
         description: "제주산 은갈치와 무, 청양고추를 넣어 칼칼하게 조린 메뉴",
         image: "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=600&h=400&fit=crop&auto=format",
-        avgFlavor: { acidity: 35, sweetness: 40, bitterness: 30, body: 75, aroma: 70 },
+        avgFlavor: { priceValue: 75, portion: 70, saltiness: 75 },
+        tags: ["#식사"],
         reviews: [
           {
             id: "r6",
@@ -226,7 +240,7 @@ export const stores: Store[] = [
             userName: "생선러버",
             menuId: "m5",
             rating: 5,
-            flavorProfile: { acidity: 38, sweetness: 42, bitterness: 32, body: 78, aroma: 72 },
+            flavorProfile: { priceValue: 80, portion: 75, saltiness: 80 },
             comment: "갈치살이 부드럽고 양념이 깊게 배어 있어요. 청양고추 덕분에 칼칼한 맛이 중독적입니다.",
             tags: ["칼칼함", "부드러운살", "중독적"],
             createdAt: "2026-06-04",
@@ -303,7 +317,8 @@ export const stores: Store[] = [
         price: 18000,
         description: "판체타, 계란 노른자, 페코리노 로마노로 만든 정통 까르보나라",
         image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&h=400&fit=crop&auto=format",
-        avgFlavor: { acidity: 15, sweetness: 55, bitterness: 10, body: 92, aroma: 85 },
+        avgFlavor: { priceValue: 70, portion: 90, saltiness: 50 },
+        tags: ["#식사"],
         reviews: [
           {
             id: "r8",
@@ -311,7 +326,7 @@ export const stores: Store[] = [
             userName: "파스타집착러",
             menuId: "m7",
             rating: 5,
-            flavorProfile: { acidity: 12, sweetness: 58, bitterness: 8, body: 95, aroma: 88 },
+            flavorProfile: { priceValue: 75, portion: 95, saltiness: 45 },
             comment: "생면의 쫄깃함과 크리미한 소스가 인상적입니다. 서울에서 먹어본 까르보나라 중 최고예요.",
             tags: ["크리미", "쫄깃한생면", "진한풍미"],
             createdAt: "2026-06-07",
@@ -323,7 +338,7 @@ export const stores: Store[] = [
             userName: "청담미식가",
             menuId: "m7",
             rating: 4,
-            flavorProfile: { acidity: 18, sweetness: 52, bitterness: 12, body: 89, aroma: 82 },
+            flavorProfile: { priceValue: 65, portion: 85, saltiness: 55 },
             comment: "정통 스타일이라 생크림이 없어 처음엔 낯설지만, 고소함이 중독적이에요.",
             tags: ["정통스타일", "진한풍미"],
             createdAt: "2026-06-03",
@@ -338,7 +353,8 @@ export const stores: Store[] = [
         price: 22000,
         description: "포르치니 버섯과 트러플 오일로 마무리한 고소한 리소토",
         image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600&h=400&fit=crop&auto=format",
-        avgFlavor: { acidity: 10, sweetness: 45, bitterness: 20, body: 88, aroma: 95 },
+        avgFlavor: { priceValue: 60, portion: 85, saltiness: 40 },
+        tags: ["#식사"],
         reviews: [],
       },
     ],
