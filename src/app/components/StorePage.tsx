@@ -21,8 +21,8 @@ function getCongestionInfo(value: number) {
 
 function StarDisplay({ rating }: { rating: number }) {
   const maxStars = 3; // 3단계 평점 기준
-  const filledStars = rating;
-  const emptyStars = maxStars - rating;
+  const filledStars = Math.min(rating, maxStars);
+  const emptyStars = Math.max(0, maxStars - filledStars);
   return (
     <span className="text-sm text-yellow-400">
       {"★".repeat(filledStars)}

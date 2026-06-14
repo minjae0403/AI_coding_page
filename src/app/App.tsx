@@ -28,6 +28,7 @@ export default function App() {
         store={selectedStore}
         menu={selectedMenu}
         onBack={() => setSelectedMenu(null)}
+        onGoHome={() => { setSelectedStore(null); setSelectedMenu(null); }}
         onStoreUpdate={handleStoreUpdate}
       />
     );

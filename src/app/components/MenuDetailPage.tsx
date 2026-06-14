@@ -9,13 +9,14 @@ interface Props {
   store: Store;
   menu: MenuItem;
   onBack: () => void;
+  onGoHome: () => void;
   onStoreUpdate: (store: Store) => void; // 리뷰 등록 후 Store 업데이트를 위해 추가
 }
 
 function StarDisplay({ rating }: { rating: number }) {
   const maxStars = 3;
-  const filledStars = rating;
-  const emptyStars = maxStars - rating;
+  const filledStars = Math.min(rating, maxStars);
+  const emptyStars = Math.max(0, maxStars - filledStars);
   return (
     <span className="text-sm text-yellow-400">
       {"★".repeat(filledStars)}
@@ -54,7 +55,7 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-export function MenuDetailPage({ store, menu, onBack, onStoreUpdate }: Props) {
+export function MenuDetailPage({ store, menu, onBack, onGoHome, onStoreUpdate }: Props) {
   const [reviewFormOpen, setReviewFormOpen] = useState(false); // 리뷰 폼 상태 관리
 
   const labels = store.type === "cafe" ? FLAVOR_LABELS : RESTAURANT_FLAVOR_LABELS;
@@ -192,9 +193,14 @@ export function MenuDetailPage({ store, menu, onBack, onStoreUpdate }: Props) {
             
             {menu.reviews.length === 0 && (
               <div className="py-8 text-center text-sm text-gray-400">
-                아직 이 메뉴의 리뷰가 없어요.
-                <br />
-                <span className="text-xs">첫 번째 리뷰를 남겨보세요.</span>
+                <p className="mb-4">아직 이 메뉴의 리뷰가 없어요.</p>
+                <button
+                  type="button"
+                  onClick={onGoHome}
+                  className="rounded-lg bg-gray-900 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-gray-800"
+                >
+                  홈으로 돌아가기
+                </button>
               </div>
             )}
           </div>
