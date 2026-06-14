@@ -141,7 +141,14 @@ export function MenuDetailPage({ store, menu, onBack, onGoHome, onStoreUpdate }:
 
         <section className="rounded-lg border border-gray-100 bg-white p-4">
           <p className="mb-0.5 text-xs text-gray-400">{store.name}</p>
-          <h1 className="text-xl font-bold text-gray-900">{menu.name}</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold text-gray-900">{menu.name}</h1>
+            {menu.tags?.filter(tag => tag === "#커피" || tag === "#식사").map(tag => (
+              <span key={tag} className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-medium text-blue-700">
+                {tag}
+              </span>
+            ))}
+          </div>
           <p className="mt-1 text-sm text-gray-600">{menu.description}</p>
           <p className="mt-2 text-lg font-bold tabular-nums text-gray-900">
             {menu.price.toLocaleString()}원
