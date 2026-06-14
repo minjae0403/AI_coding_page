@@ -142,14 +142,18 @@ export function MenuDetailPage({ store, menu, onBack, onGoHome, onStoreUpdate }:
           <div className="mt-4 border-t border-gray-100 pt-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-gray-900">리뷰 ({menu.reviews.length}개)</p>
-              <button
-                type="button"
-                onClick={() => setReviewFormOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-md bg-[#3D6BF5] px-3 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                리뷰 쓰기
-              </button>
+              {menu.tags?.includes("#커피") ? (
+                <button
+                  type="button"
+                  onClick={() => setReviewFormOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-md bg-[#3D6BF5] px-3 py-1.5 text-xs font-medium text-white transition-opacity hover:opacity-90"
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  리뷰 쓰기
+                </button>
+              ) : (
+                <span className="text-xs text-gray-400">리뷰 작성이 불가능한 메뉴입니다.</span>
+              )}
             </div>
 
             {menu.reviews.length > 0 && (

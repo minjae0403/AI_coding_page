@@ -30,6 +30,7 @@ export interface MenuItem {
   image?: string;
   reviews: Review[];
   avgFlavor: FlavorProfile;
+  tags?: string[];
 }
 
 export interface Store {
@@ -93,6 +94,7 @@ export const stores: Store[] = [
         description: "자스민 플로럴 향과 밝은 산미가 돋보이는 예가체프 커피",
         image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&h=400&fit=crop&auto=format",
         avgFlavor: { acidity: 82, sweetness: 65, bitterness: 30, body: 45, aroma: 90 },
+        tags: ["#커피"],
         reviews: [
           {
             id: "r1",
@@ -128,6 +130,7 @@ export const stores: Store[] = [
         description: "블랙커런트의 산뜻함과 강한 바디를 가진 케냐 AA 에스프레소",
         image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600&h=400&fit=crop&auto=format",
         avgFlavor: { acidity: 70, sweetness: 50, bitterness: 65, body: 80, aroma: 75 },
+        tags: ["#커피"],
         reviews: [
           {
             id: "r3",
@@ -151,6 +154,7 @@ export const stores: Store[] = [
         description: "12시간 저온 추출 콜드브루에 토닉워터를 더한 시그니처 메뉴",
         image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&h=400&fit=crop&auto=format",
         avgFlavor: { acidity: 60, sweetness: 75, bitterness: 40, body: 55, aroma: 68 },
+        tags: ["#커피"],
         reviews: [],
       },
     ],
@@ -257,6 +261,7 @@ export const stores: Store[] = [
         description: "브라질과 콜롬비아 블렌딩의 균형 잡힌 더블 에스프레소",
         image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&h=400&fit=crop&auto=format",
         avgFlavor: { acidity: 45, sweetness: 55, bitterness: 60, body: 78, aroma: 72 },
+        tags: ["#커피"],
         reviews: [
           {
             id: "r7",
