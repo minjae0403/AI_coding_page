@@ -150,7 +150,7 @@ export function MenuDetailPage({ store, menu, onBack, onGoHome, onStoreUpdate }:
           <div className="mt-4 border-t border-gray-100 pt-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-gray-900">리뷰 ({menu.reviews.length}개)</p>
-              {menu.tags?.includes("#커피") ? (
+              {(menu.tags?.includes("#커피") || menu.tags?.includes("#식사")) ? (
                 <button
                   type="button"
                   onClick={() => setReviewFormOpen(true)}
