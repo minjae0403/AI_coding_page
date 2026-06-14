@@ -1,85 +1,19 @@
-C:\Users\user\Downloads\리뷰 데이터 수집 앱
-├───ATTRIBUTIONS.md
-├───default_shadcn_theme.css
-├───index.html
-├───package-lock.json
-├───package.json
-├───pnpm-workspace.yaml
-├───postcss.config.mjs
-├───README.md
-├───vite-server.err.log
-├───vite-server.log
-├───vite.config.ts
-├───dist\...
-├───guidelines
-│   └───Guidelines.md
-├───node_modules\...
-└───src
-    ├───main.tsx
-    ├───app
-    │   ├───App.tsx
-    │   └───components
-    │       ├───CongestionBadge.tsx
-    │       ├───FlavorRadar.tsx
-    │       ├───HomePage.tsx
-    │       ├───MapPage.tsx
-    │       ├───mockData.ts
-    │       ├───ReviewForm.tsx
-    │       ├───StorePage.tsx
-    │       ├───figma
-    │       │   └───ImageWithFallback.tsx
-    │       └───ui
-    │           ├───accordion.tsx
-    │           ├───alert-dialog.tsx
-    │           ├───alert.tsx
-    │           ├───aspect-ratio.tsx
-    │           ├───avatar.tsx
-    │           ├───badge.tsx
-    │           ├───breadcrumb.tsx
-    │           ├───button.tsx
-    │           ├───calendar.tsx
-    │           ├───card.tsx
-    │           ├───carousel.tsx
-    │           ├───chart.tsx
-    │           ├───checkbox.tsx
-    │           ├───collapsible.tsx
-    │           ├───command.tsx
-    │           ├───context-menu.tsx
-    │           ├───dialog.tsx
-    │           ├───drawer.tsx
-    │           ├───dropdown-menu.tsx
-    │           ├───form.tsx
-    │           ├───hover-card.tsx
-    │           ├───input-otp.tsx
-    │           ├───input.tsx
-    │           ├───label.tsx
-    │           ├───menubar.tsx
-    │           ├───navigation-menu.tsx
-    │           ├───pagination.tsx
-    │           ├───popover.tsx
-    │           ├───progress.tsx
-    │           ├───radio-group.tsx
-    │           ├───resizable.tsx
-    │           ├───scroll-area.tsx
-    │           ├───select.tsx
-    │           ├───separator.tsx
-    │           ├───sheet.tsx
-    │           ├───sidebar.tsx
-    │           ├───skeleton.tsx
-    │           ├───slider.tsx
-    │           ├───sonner.tsx
-    │           ├───switch.tsx
-    │           ├───table.tsx
-    │           ├───tabs.tsx
-    │           ├───textarea.tsx
-    │           ├───toggle-group.tsx
-    │           ├───toggle.tsx
-    │           ├───tooltip.tsx
-    │           ├───use-mobile.ts
-    │           └───utils.ts
-    └───styles
-        ├───fonts.css
-        ├───globals.css
-        ├───index.css
-        ├───tailwind.css
-        └───theme.css
+# 프로젝트 가이드라인 (AGENT.md)
+
+이 문서는 본 프로젝트의 개발 및 유지보수를 위한 기술적 지침을 담고 있습니다.
+
+## 기술 스택
+- **프레임워크:** React, Vite
+- **언어:** TypeScript
+- **스타일:** Tailwind CSS
+- **UI 컴포넌트:** shadcn/ui
+
+## 핵심 개발 원칙
+1. **컴포넌트 재사용:** UI 컴포넌트는 `src/app/components/ui`에 정의된 shadcn/ui 컴포넌트를 우선적으로 활용합니다.
+2. **아키텍처 패턴:** 상태 관리는 가급적 상위 컴포넌트(`App.tsx`)에서 제어하며, 하위 컴포넌트로 props를 통해 전달하는 방식을 선호합니다.
+3. **안정성:** 별점 렌더링 및 수치 계산 시, `Math.min`/`Math.max` 등을 사용하여 예외 상황(범위 초과 등)을 방지합니다.
+4. **일관성:** 기능 추가 시 `README.md`를 최신 상태로 유지합니다.
+
+## 개발 명령어
+- **개발 서버 실행:** `npm run dev`
+- **빌드:** `npm run build`
