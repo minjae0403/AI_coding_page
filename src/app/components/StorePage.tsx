@@ -99,17 +99,17 @@ function MenuCard({
         </div>
       )}
       <div className="p-4">
-        <div className="mb-1 flex items-start justify-between">
-          <div className="mr-2 min-w-0 flex-1">
-            <span className="mr-1.5 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-400">
+        <div className="mb-2 flex flex-wrap gap-1">
+            <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-400">
               {item.category}
             </span>
-            <h3 className="mt-1.5 text-sm font-semibold text-gray-900">{item.name}</h3>
-          </div>
-          <span className="shrink-0 text-sm font-medium tabular-nums text-gray-900">
-            {item.price.toLocaleString()}원
-          </span>
+            {item.tags?.filter(tag => tag === "#커피" || tag === "#식사").map(tag => (
+              <span key={tag} className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                {tag}
+              </span>
+            ))}
         </div>
+        <h3 className="mb-1 text-sm font-semibold text-gray-900">{item.name}</h3>
         <p className="mb-3 mt-1 text-xs leading-relaxed text-gray-400">{item.description}</p>
 
 
