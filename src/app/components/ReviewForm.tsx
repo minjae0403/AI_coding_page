@@ -1,243 +1,311 @@
 import { useState } from "react";
-import { X } from "lucide-react";
-import type { FlavorProfile, MealFlavorProfile, MenuItem, Store } from "./mockData";
-import { FLAVOR_LABELS, RESTAURANT_FLAVOR_LABELS, MEAL_FLAVOR_LABELS } from "./mockData";
+import type { FlavorProfile, MenuItem, Store, CompanionType, PurposeType } from "./mockData";
+import { CUISINE_LABELS, CUISINE_TAGS, getCuisineType, COMPANION_OPTIONS, PURPOSE_OPTIONS } from "./mockData";
 
 interface Props {
   store: Store;
   menu: MenuItem;
   onSubmit: (review: {
     rating: number;
-    flavorProfile: FlavorProfile | MealFlavorProfile;
+    flavorProfile: FlavorProfile;
     comment: string;
     tags: string[];
     userName: string;
+    companion?: CompanionType;
+    purpose?: PurposeType;
   }) => void;
   onClose: () => void;
+  defaultNickname?: string;
 }
 
-const CAFE_TAG_OPTIONS = [
-  "밝은산미",
-  "플로럴",
-  "복합향",
-  "초콜릿",
-  "견과류",
-  "카라멜",
-  "진한바디",
-  "가벼운바디",
-  "균형잡힘",
-  "과일향",
-];
+const RATING_LABELS = ["", "별로예요", "그냥 그래요", "괜찮아요", "좋아요", "최고예요!"];
 
-const RESTAURANT_TAG_OPTIONS = [
-  "구수함",
-  "칼칼함",
-  "담백함",
-  "진한맛",
-  "중독적",
-  "깔끔함",
-  "풍미좋음",
-  "집밥맛",
-  "매콤함",
-  "짭짤함",
-];
+const CUISINE_TYPE_LABEL: Record<string, string> = {
+  cafe_dessert: "☕ 카페·디저트",
+  korean_chinese: "🍲 한식·중식",
+  western_japanese: "🍝 양식·일식",
+};
 
-const RATING_OPTIONS = [
-  { value: 1, label: "1단계", description: "아쉬워요" },
-  { value: 2, label: "2단계", description: "무난해요" },
-  { value: 3, label: "3단계", description: "좋아요" },
-];
-
-function FlavorSlider({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: number;
-  onChange: (value: number) => void;
-}) {
+function FlavorSlider({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
     <div className="flex items-center gap-3">
-      <span className="w-14 shrink-0 text-xs text-gray-500">{label}</span>
+      <span className="w-16 text-xs text-[#7A6A58] shrink-0 leading-tight">{label}</span>
       <input
         type="range"
         min={0}
         max={100}
         value={value}
-        onChange={(event) => onChange(Number(event.target.value))}
-        className="h-1.5 flex-1 cursor-pointer appearance-none rounded-full"
+        onChange={(e) => onChange(Number(e.target.value))}
+        className="flex-1 h-1.5 rounded-full appearance-none cursor-pointer"
         style={{
-          background: `linear-gradient(to right, #3D6BF5 ${value}%, #E5E7EB ${value}%)`,
-          accentColor: "#3D6BF5",
+          background: `linear-gradient(to right, #C4822A ${value}%, #EDE6DB ${value}%)`,
+          accentColor: "#C4822A",
         }}
       />
-      <span className="w-7 text-right text-xs tabular-nums text-[#3D6BF5]">{value}</span>
+      <span className="w-7 text-xs text-right tabular-nums shrink-0" style={{ color: "#C4822A", fontFamily: "var(--font-mono)" }}>
+        {value}
+      </span>
     </div>
   );
 }
 
-export function ReviewForm({ store, menu, onSubmit, onClose }: Props) {
-  const isMeal = menu.tags?.includes("#식사") ?? false;
-  const [rating, setRating] = useState(2);
-  
-  const [flavor, setFlavor] = useState<FlavorProfile | MealFlavorProfile>(
-    isMeal
-      ? { priceValue: 50, portion: 50, saltiness: 50 }
-      : { acidity: 50, sweetness: 50, bitterness: 50, body: 50, aroma: 50 }
-  );
+export function ReviewForm({ store, menu, onSubmit, onClose, defaultNickname = "" }: Props) {
+  const cuisineType = getCuisineType(store.category);
+  const labels = CUISINE_LABELS[cuisineType];
+  const tagOptions = CUISINE_TAGS[cuisineType];
 
-  const [comment, setComment] = useState("");
+  const [step, setStep] = useState<"context" | "flavor" | "comment">("context");
+  const [rating, setRating] = useState(4);
+  const [hoverRating, setHoverRating] = useState(0);
+  const [companion, setCompanion] = useState<CompanionType | undefined>();
+  const [purpose, setPurpose] = useState<PurposeType | undefined>();
+  const [flavor, setFlavor] = useState<FlavorProfile>({ dim1: 50, dim2: 50, dim3: 50, dim4: 50, dim5: 50 });
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [userName, setUserName] = useState("");
+  const [comment, setComment] = useState("");
+  const [userName, setUserName] = useState(defaultNickname);
 
-  const labels = isMeal ? MEAL_FLAVOR_LABELS : (store.type === "cafe" ? FLAVOR_LABELS : RESTAURANT_FLAVOR_LABELS);
-  const tagOptions = store.type === "cafe" ? CAFE_TAG_OPTIONS : RESTAURANT_TAG_OPTIONS;
+  const toggleTag = (tag: string) =>
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : prev.length < 5 ? [...prev, tag] : prev
+    );
 
-  const toggleTag = (tag: string) => {
-    setSelectedTags((current) => {
-      if (current.includes(tag)) return current.filter((item) => item !== tag);
-      if (current.length >= 5) return current;
-      return [...current, tag];
-    });
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (!comment.trim() || !userName.trim()) return;
-    onSubmit({
-      rating,
-      flavorProfile: flavor,
-      comment: comment.trim(),
-      tags: selectedTags,
-      userName: userName.trim(),
-    });
+    onSubmit({ rating, flavorProfile: flavor, comment, tags: selectedTags, userName, companion, purpose });
   };
+
+  const displayRating = hoverRating || rating;
+  const totalSteps = 3;
+  const stepIndex = step === "context" ? 1 : step === "flavor" ? 2 : 3;
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm">
-      <div className="w-full max-w-lg overflow-y-auto rounded-t-3xl bg-white" style={{ maxHeight: "92vh" }}>
-        <div className="flex justify-center pb-1 pt-3">
-          <div className="h-1 w-10 rounded-full bg-gray-200" />
+      <div className="w-full max-w-lg bg-white rounded-t-3xl overflow-y-auto" style={{ maxHeight: "92vh" }}>
+        {/* Handle + progress */}
+        <div className="px-5 pt-3 pb-3">
+          <div className="flex justify-center mb-3">
+            <div className="w-10 h-1 rounded-full bg-[#EDE6DB]" />
+          </div>
+          <div className="flex items-center gap-2">
+            {[1, 2, 3].map((s) => (
+              <div
+                key={s}
+                className="flex-1 h-1 rounded-full transition-all"
+                style={{ backgroundColor: s <= stepIndex ? "#C4822A" : "#EDE6DB" }}
+              />
+            ))}
+          </div>
         </div>
 
-        <div className="border-b border-gray-100 px-5 pb-3 pt-2">
-          <div className="flex items-center justify-between gap-3">
-            <div className="min-w-0">
-              <p className="truncate text-xs text-gray-400">{store.name}</p>
-              <h2 className="truncate text-base font-semibold text-gray-900">{menu.name}</h2>
+        {/* Header */}
+        <div className="px-5 pb-3" style={{ borderBottom: "1px solid rgba(44,26,14,0.08)" }}>
+          <div className="flex justify-between items-start">
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <p className="text-xs text-[#7A6A58]">{store.name}</p>
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: "#EDE6DB", color: "#7A6A58" }}>
+                  {CUISINE_TYPE_LABEL[cuisineType]}
+                </span>
+              </div>
+              <h2 className="text-base font-semibold text-[#1C1814]">{menu.name}</h2>
             </div>
             <button
-              type="button"
               onClick={onClose}
-              aria-label="리뷰 작성 닫기"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200"
-            >
-              <X className="h-4 w-4" />
-            </button>
+              className="w-8 h-8 rounded-full flex items-center justify-center text-[#7A6A58] hover:bg-[#EDE6DB] transition-colors text-sm shrink-0"
+              style={{ border: "1px solid rgba(44,26,14,0.1)" }}
+            >✕</button>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-5 px-5 py-4">
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-gray-500">닉네임</label>
-            <input
-              value={userName}
-              onChange={(event) => setUserName(event.target.value)}
-              placeholder="사용할 닉네임"
-              className="w-full rounded-lg bg-gray-100 px-3 py-2.5 text-sm text-gray-900 outline-none transition-all placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-200"
-              required
-            />
-          </div>
+        <div className="px-5 py-5">
+          {/* STEP 1: Context (companion + purpose + rating + nickname) */}
+          {step === "context" && (
+            <div className="flex flex-col gap-5">
+              <div>
+                <p className="text-xs font-medium text-[#7A6A58] mb-2">누구와 방문했나요?</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {COMPANION_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setCompanion(companion === opt.value ? undefined : opt.value)}
+                      className="flex flex-col items-center py-2.5 rounded-xl text-xs transition-all gap-1"
+                      style={{
+                        backgroundColor: companion === opt.value ? "#FFF5E8" : "#F7F3EE",
+                        color: companion === opt.value ? "#C4822A" : "#7A6A58",
+                        border: `1.5px solid ${companion === opt.value ? "#C4822A" : "transparent"}`,
+                      }}
+                    >
+                      <span className="text-xl">{opt.emoji}</span>
+                      <span>{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          <div>
-            <label className="mb-2 block text-xs font-medium text-gray-500">평가 단계</label>
-            <div className="grid grid-cols-3 gap-2">
-              {RATING_OPTIONS.map((option) => {
-                const selected = rating === option.value;
-                return (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => setRating(option.value)}
-                  className="rounded-lg border px-2 py-2 text-center transition-all active:scale-[0.98]"
-                  style={{
-                    backgroundColor: selected ? "#EEF2FF" : "#FFFFFF",
-                    borderColor: selected ? "#3D6BF5" : "#E5E7EB",
-                    color: selected ? "#3D6BF5" : "#6B7280",
-                  }}
-                  aria-pressed={selected}
-                >
-                  <span className="block text-sm font-semibold">{option.label}</span>
-                  <span className="mt-0.5 block text-[11px]">{option.description}</span>
-                </button>
-                );
-              })}
-            </div>
-          </div>
+              <div>
+                <p className="text-xs font-medium text-[#7A6A58] mb-2">방문 목적은요?</p>
+                <div className="flex flex-wrap gap-2">
+                  {PURPOSE_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setPurpose(purpose === opt.value ? undefined : opt.value)}
+                      className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs transition-all"
+                      style={{
+                        backgroundColor: purpose === opt.value ? "#FFF5E8" : "#F7F3EE",
+                        color: purpose === opt.value ? "#C4822A" : "#7A6A58",
+                        border: `1.5px solid ${purpose === opt.value ? "#C4822A" : "transparent"}`,
+                      }}
+                    >
+                      <span>{opt.emoji}</span>
+                      <span>{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          <div>
-            <label className="mb-3 block text-xs font-medium text-gray-500">
-              {isMeal ? "식사 평가" : "맛 프로필"}
-              <span className="ml-1 font-normal text-gray-400">(0-100)</span>
-            </label>
-            <div className="flex flex-col gap-3 rounded-lg bg-gray-50 p-3">
-              {(Object.keys(flavor) as Array<keyof (FlavorProfile | MealFlavorProfile)>).map((key) => (
-                <FlavorSlider
-                  key={key}
-                  label={labels[key]}
-                  value={(flavor as any)[key]}
-                  onChange={(value) => setFlavor((current) => ({ ...current, [key]: value }))}
+              <div>
+                <p className="text-xs font-medium text-[#7A6A58] mb-2">전반적인 만족도</p>
+                <div className="flex items-center gap-1.5">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onMouseEnter={() => setHoverRating(star)}
+                      onMouseLeave={() => setHoverRating(0)}
+                      onClick={() => setRating(star)}
+                      className="text-2xl transition-transform active:scale-90"
+                      style={{ color: star <= displayRating ? "#FBBF24" : "#EDE6DB" }}
+                    >★</button>
+                  ))}
+                  <span className="text-sm text-[#7A6A58] ml-1">{RATING_LABELS[displayRating]}</span>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs font-medium text-[#7A6A58] mb-1.5">닉네임</p>
+                <input
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="사용할 닉네임"
+                  className="w-full px-3 py-2.5 rounded-xl text-sm text-[#1C1814] outline-none focus:ring-2 ring-[#C4822A]/40 transition-all"
+                  style={{ backgroundColor: "#F7F3EE", border: "1px solid rgba(44,26,14,0.12)" }}
                 />
-              ))}
-            </div>
-          </div>
+              </div>
 
-          <div>
-            <label className="mb-2 block text-xs font-medium text-gray-500">
-              태그 선택 <span className="font-normal text-gray-400">(최대 5개)</span>
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {tagOptions.map((tag) => {
-                const selected = selectedTags.includes(tag);
-                return (
-                  <button
-                    key={tag}
-                    type="button"
-                    onClick={() => toggleTag(tag)}
-                    className="rounded-full px-3 py-1.5 text-xs transition-all"
-                    style={{
-                      backgroundColor: selected ? "#EEF2FF" : "#F3F4F6",
-                      color: selected ? "#3D6BF5" : "#6B7280",
-                      border: `1px solid ${selected ? "#3D6BF5" : "transparent"}`,
-                    }}
-                  >
+              <button
+                onClick={() => setStep("flavor")}
+                className="w-full py-3.5 rounded-xl text-white text-sm font-semibold"
+                style={{ backgroundColor: "#2C1A0E" }}
+              >
+                다음 — 맛 프로필 →
+              </button>
+            </div>
+          )}
+
+          {/* STEP 2: Flavor sliders + tags */}
+          {step === "flavor" && (
+            <div className="flex flex-col gap-5">
+              <div>
+                <p className="text-xs font-medium text-[#7A6A58] mb-1">맛 평가 슬라이더</p>
+                <p className="text-xs text-[#7A6A58]/60 mb-3">{CUISINE_TYPE_LABEL[cuisineType]} 기준</p>
+                <div className="rounded-xl p-3 flex flex-col gap-3.5" style={{ backgroundColor: "#F7F3EE" }}>
+                  {(Object.keys(flavor) as Array<keyof FlavorProfile>).map((key) => (
+                    <FlavorSlider
+                      key={key}
+                      label={labels[key]}
+                      value={flavor[key]}
+                      onChange={(v) => setFlavor((prev) => ({ ...prev, [key]: v }))}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs font-medium text-[#7A6A58] mb-2">
+                  태그 <span className="font-normal text-[#7A6A58]/60">(최대 5개)</span>
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {tagOptions.map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => toggleTag(tag)}
+                      className="px-3 py-1.5 rounded-full text-xs transition-all"
+                      style={{
+                        backgroundColor: selectedTags.includes(tag) ? "#FFF5E8" : "#F7F3EE",
+                        color: selectedTags.includes(tag) ? "#C4822A" : "#7A6A58",
+                        border: `1px solid ${selectedTags.includes(tag) ? "#C4822A" : "rgba(44,26,14,0.12)"}`,
+                      }}
+                    >#{tag}</button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setStep("context")}
+                  className="flex-1 py-3 rounded-xl text-sm font-medium"
+                  style={{ backgroundColor: "#EDE6DB", color: "#2C1A0E" }}
+                >← 이전</button>
+                <button
+                  onClick={() => setStep("comment")}
+                  className="flex-1 py-3 rounded-xl text-white text-sm font-semibold"
+                  style={{ backgroundColor: "#2C1A0E" }}
+                >다음 →</button>
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3: Comment + submit */}
+          {step === "comment" && (
+            <div className="flex flex-col gap-5">
+              <div>
+                <p className="text-xs font-medium text-[#7A6A58] mb-1.5">한 줄 리뷰</p>
+                <textarea
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="솔직한 느낌을 자유롭게 남겨주세요 🙂"
+                  rows={5}
+                  autoFocus
+                  className="w-full px-3 py-2.5 rounded-xl text-sm text-[#1C1814] outline-none focus:ring-2 ring-[#C4822A]/40 transition-all resize-none"
+                  style={{ backgroundColor: "#F7F3EE", border: "1px solid rgba(44,26,14,0.12)" }}
+                />
+              </div>
+
+              {/* Summary before submit */}
+              <div className="rounded-xl p-3 flex flex-wrap gap-2" style={{ backgroundColor: "#F7F3EE" }}>
+                {companion && (
+                  <span className="text-xs px-2.5 py-1 rounded-full" style={{ backgroundColor: "#EDE6DB", color: "#7A6A58" }}>
+                    {COMPANION_OPTIONS.find((o) => o.value === companion)?.emoji} {COMPANION_OPTIONS.find((o) => o.value === companion)?.label}
+                  </span>
+                )}
+                {purpose && (
+                  <span className="text-xs px-2.5 py-1 rounded-full" style={{ backgroundColor: "#EDE6DB", color: "#7A6A58" }}>
+                    {PURPOSE_OPTIONS.find((o) => o.value === purpose)?.emoji} {PURPOSE_OPTIONS.find((o) => o.value === purpose)?.label}
+                  </span>
+                )}
+                {selectedTags.map((tag) => (
+                  <span key={tag} className="text-xs px-2.5 py-1 rounded-full" style={{ backgroundColor: "#FFF5E8", color: "#C4822A" }}>
                     #{tag}
-                  </button>
-                );
-              })}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setStep("flavor")}
+                  className="flex-1 py-3 rounded-xl text-sm font-medium"
+                  style={{ backgroundColor: "#EDE6DB", color: "#2C1A0E" }}
+                >← 이전</button>
+                <button
+                  onClick={handleSubmit}
+                  disabled={!comment.trim() || !userName.trim()}
+                  className="flex-1 py-3 rounded-xl text-white text-sm font-semibold transition-opacity disabled:opacity-40"
+                  style={{ backgroundColor: "#C4822A" }}
+                >등록하기</button>
+              </div>
             </div>
-          </div>
-
-          <div>
-            <label className="mb-1.5 block text-xs font-medium text-gray-500">한 줄 리뷰</label>
-            <textarea
-              value={comment}
-              onChange={(event) => setComment(event.target.value)}
-              placeholder="맛과 분위기에 대한 솔직한 느낌을 남겨주세요."
-              rows={3}
-              className="w-full resize-none rounded-lg bg-gray-100 px-3 py-2.5 text-sm text-gray-900 outline-none transition-all placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-200"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-[#3D6BF5] py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          >
-            리뷰 등록하기
-          </button>
-        </form>
+          )}
+        </div>
       </div>
     </div>
   );

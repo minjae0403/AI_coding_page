@@ -1,25 +1,11 @@
-# 리뷰 데이터 수집 앱
 
-카페와 식당의 메뉴별 리뷰, 맛 프로필, 태그를 수집하는 React/Vite 앱입니다.
+  # 리뷰 데이터 수집 앱
 
-## 실행 방법
+  This is a code bundle for 리뷰 데이터 수집 앱. The original project is available at https://www.figma.com/design/loyCAU7Y5ecm6cKfjSJLPI/%EB%A6%AC%EB%B7%B0-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%88%98%EC%A7%91-%EC%95%B1.
 
-```bash
-npm install
-npm run dev
-```
+  ## Running the code
 
-## 빌드
+  Run `npm i` to install the dependencies.
 
-```bash
-npm run build
-```
-
-## 현재 구현된 기능
-
-- 매장 검색 및 유형/지역 필터
-- 매장 상세 정보 확인
-- 메뉴별 리뷰 조회 (홈으로 이동 기능 포함)
-- 별점(3단계) 표시 및 렌더링 안전성 강화
-- 별점, 맛 프로필, 태그, 코멘트를 포함한 리뷰 작성
-- 리뷰 등록 후 평균 맛 프로필 갱신
+  Run `npm run dev` to start the development server.
+  

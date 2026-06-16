@@ -1,15 +1,23 @@
 import { useState } from "react";
-import { stores as initialStores, type MenuItem, type Store } from "./components/mockData";
+import { stores as initialStores, type Store, type MenuItem, type UserProfile } from "./components/mockData";
+import { TasteOnboarding } from "./components/TasteOnboarding";
 import { HomePage } from "./components/HomePage";
 import { StorePage } from "./components/StorePage";
 import { MapPage } from "./components/MapPage";
 import { MenuDetailPage } from "./components/MenuDetailPage";
 
 export default function App() {
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [onboardingDone, setOnboardingDone] = useState(false);
   const [stores, setStores] = useState<Store[]>(initialStores);
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [selectedMenu, setSelectedMenu] = useState<MenuItem | null>(null);
   const [view, setView] = useState<"home" | "map">("home");
+
+  const handleOnboardingComplete = (profile: UserProfile) => {
+    setUserProfile(profile);
+    setOnboardingDone(true);
+  };
 
   const handleStoreUpdate = (updatedStore: Store) => {
     setStores((prev) => prev.map((s) => (s.id === updatedStore.id ? updatedStore : s)));
@@ -21,6 +29,11 @@ export default function App() {
       }
     }
   };
+
+  // Show onboarding on first visit
+  if (!onboardingDone) {
+    return <TasteOnboarding onComplete={handleOnboardingComplete} />;
+  }
 
   if (selectedMenu && selectedStore) {
     return (
@@ -38,6 +51,7 @@ export default function App() {
     return (
       <StorePage
         store={selectedStore}
+        userProfile={userProfile}
         onBack={() => setSelectedStore(null)}
         onStoreUpdate={handleStoreUpdate}
         onSelectMenu={setSelectedMenu}
@@ -58,6 +72,7 @@ export default function App() {
   return (
     <HomePage
       stores={stores}
+      userProfile={userProfile}
       onSelectStore={setSelectedStore}
       onOpenMap={() => setView("map")}
     />
