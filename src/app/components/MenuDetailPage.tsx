@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import type { FlavorProfile, MealFlavorProfile, MenuItem, Review, Store } from "./mockData";
-import { FLAVOR_LABELS, RESTAURANT_FLAVOR_LABELS, MEAL_FLAVOR_LABELS } from "./mockData";
 import { FlavorRadar } from "./FlavorRadar";
 import { ReviewForm } from "./ReviewForm"; // ReviewForm import 추가
 

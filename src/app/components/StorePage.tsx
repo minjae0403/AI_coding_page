@@ -369,7 +369,20 @@ export function StorePage({ store, userProfile, onBack, onStoreUpdate }: Props) 
           </div>
           <p className="text-sm text-[#4A3828] leading-relaxed mb-4">{store.description}</p>
           <div className="flex flex-col gap-1.5 text-xs text-[#7A6A58] mb-4">
-            <div className="flex gap-2 items-start"><span>📍</span><span>{store.address}</span></div>
+            <div className="flex gap-2 items-start">
+              <span>📍</span>
+              <div className="flex items-center gap-2">
+                <span>{store.address}</span>
+                <a
+                  href={`https://map.naver.com/p/search/${encodeURIComponent(store.address)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-2 py-0.5 rounded-full text-[10px] bg-[#EDE6DB] text-[#C4822A] hover:bg-[#E0D5C3]"
+                >
+                  네이버 지도
+                </a>
+              </div>
+            </div>
             <div className="flex gap-2 items-start"><span>🕐</span><span>{store.hours}</span></div>
             <div className="flex gap-2"><span>📞</span><span>{store.phone}</span></div>
           </div>

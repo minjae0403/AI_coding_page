@@ -164,6 +164,8 @@ export interface Store {
   hours: string;
   image: string;
   description: string;
+  lat: number;
+  lng: number;
   congestion: number;
   congestionUpdated: string;
   menu: MenuItem[];
@@ -182,6 +184,8 @@ export const stores: Store[] = [
     hours: "월–금 09:00–21:00, 토–일 10:00–22:00",
     image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&h=500&fit=crop&auto=format",
     description: "에티오피아, 케냐 등 싱글오리진 원두를 직접 로스팅하는 스페셜티 카페입니다.",
+    lat: 37.5622,
+    lng: 126.9237,
     congestion: 40,
     congestionUpdated: "5분 전",
     tags: ["스페셜티", "싱글오리진", "핸드드립", "조용한"],
@@ -258,6 +262,8 @@ export const stores: Store[] = [
     hours: "화–일 11:30–21:00 (브레이크 15:00–17:30)",
     image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=800&h=500&fit=crop&auto=format",
     description: "제철 재료를 사용한 정갈한 한식. 매일 어머니가 직접 담근 김치가 나옵니다.",
+    lat: 37.5446,
+    lng: 127.0557,
     congestion: 75,
     congestionUpdated: "12분 전",
     tags: ["한식", "제철재료", "가정식", "소박한"],
@@ -324,6 +330,8 @@ export const stores: Store[] = [
     hours: "매일 08:00–23:00",
     image: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=800&h=500&fit=crop&auto=format",
     description: "이탈리안 에스프레소 스타일을 고집하는 작은 에스프레소 바.",
+    lat: 37.5345,
+    lng: 126.9946,
     congestion: 20,
     congestionUpdated: "3분 전",
     tags: ["에스프레소바", "이탈리안", "빠른", "직장인"],
@@ -361,6 +369,8 @@ export const stores: Store[] = [
     hours: "화–일 12:00–22:00 (브레이크 15:00–18:00)",
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=500&fit=crop&auto=format",
     description: "신선한 국산 재료로 만드는 가정식 이탈리안. 생면 파스타를 직접 만듭니다.",
+    lat: 37.5252,
+    lng: 127.0473,
     congestion: 55,
     congestionUpdated: "8분 전",
     tags: ["이탈리안", "생면파스타", "데이트", "분위기좋은"],
