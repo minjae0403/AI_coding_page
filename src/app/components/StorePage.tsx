@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Plus } from "lucide-react";
 import type { Store, MenuItem, Review, UserProfile } from "./mockData";
 import { CUISINE_LABELS, getCuisineType, computeSyncScore, COMPANION_OPTIONS, PURPOSE_OPTIONS } from "./mockData";
 import { FlavorRadar } from "./FlavorRadar";
@@ -422,14 +423,6 @@ export function StorePage({ store, userProfile, onBack, onStoreUpdate }: Props) 
             ))}
           </div>
           <p className="text-sm text-[#4A3828] leading-relaxed mb-4">{store.description}</p>
-          <div className="mb-4">
-            <button
-              onClick={() => setMenuFormOpen(true)}
-              className="w-full rounded-xl border border-[#C4822A] bg-[#FFF5E8] px-4 py-3 text-sm font-semibold text-[#C4822A]"
-            >
-              메뉴 등록
-            </button>
-          </div>
           <div className="flex flex-col gap-1.5 text-xs text-[#7A6A58] mb-4">
             <div className="flex gap-2 items-start">
               <span>📍</span>
@@ -555,6 +548,18 @@ export function StorePage({ store, userProfile, onBack, onStoreUpdate }: Props) 
           onClose={() => setReviewTarget(null)}
         />
       )}
+
+      <button
+        onClick={() => setMenuFormOpen(true)}
+        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full px-5 py-3.5 text-white font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl active:scale-95"
+        style={{
+          background: "linear-gradient(135deg, #C4822A 0%, #A0642A 100%)",
+          boxShadow: "0 8px 32px rgba(196,130,42,0.4)",
+        }}
+      >
+        <Plus className="h-5 w-5" />
+        <span className="text-sm">메뉴 등록</span>
+      </button>
 
       {menuFormOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm">
