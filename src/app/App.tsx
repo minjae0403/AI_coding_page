@@ -96,7 +96,6 @@ export default function App() {
         userProfile={userProfile}
         onBack={() => setSelectedStore(null)}
         onStoreUpdate={handleStoreUpdate}
-        onSelectMenu={setSelectedMenu}
       />
     );
   }

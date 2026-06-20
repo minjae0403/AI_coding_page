@@ -3,6 +3,7 @@ import type { Store, MenuItem, Review, UserProfile } from "./mockData";
 import { CUISINE_LABELS, getCuisineType, computeSyncScore, COMPANION_OPTIONS, PURPOSE_OPTIONS } from "./mockData";
 import { FlavorRadar } from "./FlavorRadar";
 import { ReviewForm } from "./ReviewForm";
+import { createMenuInDB } from "../api";
 
 interface Props {
   store: Store;
@@ -232,6 +233,14 @@ function StoreRadar({ store }: { store: Store }) {
 export function StorePage({ store, userProfile, onBack, onStoreUpdate }: Props) {
   const [reviewTarget, setReviewTarget] = useState<MenuItem | null>(null);
   const [showRating, setShowRating] = useState(false);
+  const [menuFormOpen, setMenuFormOpen] = useState(false);
+  const [menuSubmitting, setMenuSubmitting] = useState(false);
+  const [menuError, setMenuError] = useState("");
+  const [menuName, setMenuName] = useState("");
+  const [menuCategory, setMenuCategory] = useState("");
+  const [menuPrice, setMenuPrice] = useState("");
+  const [menuDescription, setMenuDescription] = useState("");
+  const [menuImageUrl, setMenuImageUrl] = useState("");
 
   const syncScore = userProfile ? computeSyncScore(userProfile.prefs, store) : null;
   const { label: congLabel, color: congColor, bg: congBg } = getCongestionInfo(store.congestion);
@@ -268,6 +277,51 @@ export function StorePage({ store, userProfile, onBack, onStoreUpdate }: Props) 
 
     onStoreUpdate({ ...store, menu: updatedMenu });
     setReviewTarget(null);
+  };
+
+  const handleMenuSubmit = async () => {
+    if (!menuName.trim()) {
+      setMenuError("메뉴 이름을 입력하세요.");
+      return;
+    }
+    if (!menuPrice.trim() || Number.isNaN(Number(menuPrice))) {
+      setMenuError("가격을 숫자로 입력하세요.");
+      return;
+    }
+    setMenuSubmitting(true);
+    setMenuError("");
+    try {
+      await createMenuInDB({
+        storeId: store.id,
+        name: menuName.trim(),
+        category: menuCategory.trim() || store.category,
+        price: Number(menuPrice),
+        description: menuDescription.trim() || null,
+        imageUrl: menuImageUrl.trim() || null,
+      });
+
+      const newMenu: MenuItem = {
+        id: `menu-${Date.now()}`,
+        name: menuName.trim(),
+        category: menuCategory.trim() || store.category,
+        price: Number(menuPrice),
+        description: menuDescription.trim(),
+        image: menuImageUrl.trim() || undefined,
+        reviews: [],
+        avgFlavor: { dim1: 50, dim2: 50, dim3: 50, dim4: 50, dim5: 50 },
+      };
+      onStoreUpdate({ ...store, menu: [...store.menu, newMenu] });
+      setMenuFormOpen(false);
+      setMenuName("");
+      setMenuCategory("");
+      setMenuPrice("");
+      setMenuDescription("");
+      setMenuImageUrl("");
+    } catch (err: any) {
+      setMenuError(err?.message || "메뉴 등록에 실패했습니다.");
+    } finally {
+      setMenuSubmitting(false);
+    }
   };
 
   const totalReviews = store.menu.reduce((s, m) => s + m.reviews.length, 0);
@@ -368,6 +422,14 @@ export function StorePage({ store, userProfile, onBack, onStoreUpdate }: Props) 
             ))}
           </div>
           <p className="text-sm text-[#4A3828] leading-relaxed mb-4">{store.description}</p>
+          <div className="mb-4">
+            <button
+              onClick={() => setMenuFormOpen(true)}
+              className="w-full rounded-xl border border-[#C4822A] bg-[#FFF5E8] px-4 py-3 text-sm font-semibold text-[#C4822A]"
+            >
+              메뉴 등록
+            </button>
+          </div>
           <div className="flex flex-col gap-1.5 text-xs text-[#7A6A58] mb-4">
             <div className="flex gap-2 items-start">
               <span>📍</span>
@@ -492,6 +554,31 @@ export function StorePage({ store, userProfile, onBack, onStoreUpdate }: Props) 
           onSubmit={(data) => handleReviewSubmit(reviewTarget.id, data)}
           onClose={() => setReviewTarget(null)}
         />
+      )}
+
+      {menuFormOpen && (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-lg rounded-t-3xl bg-white px-5 py-5">
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <p className="text-sm font-semibold text-[#1C1814]">메뉴 등록</p>
+                <p className="text-xs text-[#7A6A58]">{store.name}에 종속된 메뉴만 등록됩니다.</p>
+              </div>
+              <button onClick={() => setMenuFormOpen(false)} className="text-sm text-[#7A6A58]">닫기</button>
+            </div>
+            {menuError && <div className="mb-3 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">{menuError}</div>}
+            <div className="space-y-3">
+              <input value={menuName} onChange={(e) => setMenuName(e.target.value)} placeholder="메뉴 이름" className="w-full rounded-2xl border border-[rgba(44,26,14,0.12)] px-4 py-3 text-sm outline-none focus:border-[#C4822A]" />
+              <input value={menuCategory} onChange={(e) => setMenuCategory(e.target.value)} placeholder="메뉴 카테고리" className="w-full rounded-2xl border border-[rgba(44,26,14,0.12)] px-4 py-3 text-sm outline-none focus:border-[#C4822A]" />
+              <input value={menuPrice} onChange={(e) => setMenuPrice(e.target.value)} placeholder="가격" className="w-full rounded-2xl border border-[rgba(44,26,14,0.12)] px-4 py-3 text-sm outline-none focus:border-[#C4822A]" />
+              <input value={menuImageUrl} onChange={(e) => setMenuImageUrl(e.target.value)} placeholder="이미지 URL" className="w-full rounded-2xl border border-[rgba(44,26,14,0.12)] px-4 py-3 text-sm outline-none focus:border-[#C4822A]" />
+              <textarea value={menuDescription} onChange={(e) => setMenuDescription(e.target.value)} placeholder="메뉴 설명" rows={4} className="w-full resize-none rounded-2xl border border-[rgba(44,26,14,0.12)] px-4 py-3 text-sm outline-none focus:border-[#C4822A]" />
+              <button onClick={handleMenuSubmit} disabled={menuSubmitting} className="w-full rounded-2xl bg-[#C4822A] py-3.5 text-sm font-semibold text-white disabled:opacity-50">
+                {menuSubmitting ? "저장 중..." : "메뉴 저장"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

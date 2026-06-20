@@ -5,6 +5,31 @@ const ORDS_BASE_URL = import.meta.env.VITE_ORDS_PATH;
 const SCHEMA = 'test_server'; // 소문자 스키마명
 const API_URL = `${ORDS_BASE_URL.endsWith('/') ? ORDS_BASE_URL : ORDS_BASE_URL + '/'}${SCHEMA}`;
 
+export type StoreCreateInput = {
+  name: string;
+  type: Store["type"];
+  category: string;
+  address: string;
+  district: string;
+  phone?: string | null;
+  hours?: string | null;
+  imageUrl?: string | null;
+  description?: string | null;
+  latitude: number;
+  longitude: number;
+  congestion?: number;
+  tags?: string[];
+};
+
+export type MenuCreateInput = {
+  storeId: string;
+  name: string;
+  category: string;
+  price: number;
+  description?: string | null;
+  imageUrl?: string | null;
+};
+
 export interface ORDSResponse<T> {
   items: T[];
   hasMore: boolean;
@@ -119,5 +144,68 @@ export async function fetchStoresFromDB(): Promise<Store[]> {
   } catch (error) {
     console.error("오라클 DB 데이터 로드 실패. 로컬 mockData로 대체합니다:", error);
     throw error;
+  }
+}
+
+export async function createStoreInDB(input: StoreCreateInput) {
+  const storeId = `store-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  const storePayload = {
+    store_id: storeId,
+    name: input.name,
+    type: input.type,
+    category: input.category,
+    address: input.address,
+    district: input.district,
+    phone: input.phone || null,
+    hours: input.hours || null,
+    image_url: input.imageUrl || null,
+    description: input.description || null,
+    latitude: input.latitude,
+    longitude: input.longitude,
+    congestion: input.congestion ?? 10,
+  };
+
+  const storeRes = await fetch(`${API_URL}/stores/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(storePayload),
+  });
+
+  if (!storeRes.ok) {
+    const errorText = await storeRes.text();
+    throw new Error(`가게 등록에 실패했습니다. (${storeRes.status}) ${errorText}`);
+  }
+
+  for (const tag of input.tags ?? []) {
+    await fetch(`${API_URL}/store_tags/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ store_id: storeId, tag_name: tag }),
+    });
+  }
+
+  return { storeId };
+}
+
+export async function createMenuInDB(input: MenuCreateInput) {
+  const menuPayload = {
+    menu_id: `menu-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+    store_id: input.storeId,
+    name: input.name,
+    category: input.category,
+    price: input.price,
+    description: input.description || null,
+    image_url: input.imageUrl || null,
+  };
+
+  const res = await fetch(`${API_URL}/menu_items/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(menuPayload),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`메뉴 등록에 실패했습니다. (${res.status}) ${errorText}`);
   }
 }
