@@ -1,1 +1,8 @@
+# 보안 폴더
+config
+
 node_modules
+
+# 보안 파일
+serverpw.md
+.env
